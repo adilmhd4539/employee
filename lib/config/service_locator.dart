@@ -1,4 +1,3 @@
-import 'package:employee__app/fetures/employee/presentation/bloc/employee_bloc.dart';
 import 'package:employee__app/resources/db_services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
