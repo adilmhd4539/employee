@@ -21,6 +21,21 @@ class ToDateCalender extends StatefulWidget {
 }
 
 class _ToDateCalenderState extends State<ToDateCalender> {
+   DateTime _getStartDate() {
+    if (widget.selectedDate == null) {
+      if (widget.startDate.isBefore(DateTime.now())) {
+        return widget.startDate;
+      } else {
+        return DateTime.now();
+      }
+    } else {
+      if (widget.selectedDate!.isBefore(widget.startDate)) {
+        return widget.selectedDate!;
+      } else {
+        return widget.startDate;
+      }
+    }
+  }
   final ValueNotifier<DateTime?> _focusedDayNotifier = ValueNotifier(null);
   void _handleOnDateSelected(DateTime selectedDate, DateTime focusedDay) {
     if (!isSameDay(_focusedDayNotifier.value, focusedDay)) {
@@ -111,17 +126,7 @@ class _ToDateCalenderState extends State<ToDateCalender> {
                     titleCentered: true,
                   ),
                   onDaySelected: _handleOnDateSelected,
-                  firstDay: widget.startDate == null
-                      ? widget.selectedDate == null
-                          ? DateTime.now()
-                          : widget.selectedDate!.isBefore(DateTime.now())
-                              ? widget.selectedDate!
-                              : DateTime.now()
-                      : widget.selectedDate == null
-                          ? widget.startDate!
-                          : widget.selectedDate!.isBefore(widget.startDate!)
-                              ? widget.selectedDate!
-                              : widget.startDate!,
+                  firstDay: _getStartDate(),
                   focusedDay: value ?? DateTime.now(),
                   lastDay: DateTime(2050)),
             ),
